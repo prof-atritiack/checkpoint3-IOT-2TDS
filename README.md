@@ -11,8 +11,7 @@
 A entrega deve conter os seguintes elementos:  
 1. Link do repositório no GitHub contendo todos os arquivos do projeto.  
 2. Link para um vídeo curto (máximo 3 minutos) demonstrando a aplicação funcionando.  
-3. Arquivo `integrantes.txt` contendo:  
-   - Nomes completos dos integrantes.      
+3. Arquivo `integrantes.txt` contendo os nomes completos dos integrantes.      
 
 ---
 
@@ -37,22 +36,20 @@ A atividade pode ser realizada em grupos de até **3 integrantes**. Apenas um al
 
 ## OPÇÃO DE DESENVOLVIMENTO NO PLATFORMIO COM WOKWI (VSCode)
 
-Os alunos também podem optar por simular o projeto utilizando o PlatformIO com Wokwi no VSCode. Essa opção é recomendada para aqueles que não possuem o hardware ESP32.
+Os alunos também podem optar por simular o projeto utilizando o PlatformIO com Wokwi no VSCode. Essa opção é recomendada para aqueles que não possuem o hardware DOIT ESP32 DEVKIT V1.
 
-### **INSTALAÇÃO DO VSCODE E PLATFORMIO:**
+### **INSTALAÇÃO DA EXTENSÃO PlatformIO:**
 
-1. Instale o **Visual Studio Code (VSCode)**:  
-   [Download VSCode](https://code.visualstudio.com/)  
 
-2. No VSCode, abra a aba de extensões e instale a extensão **PlatformIO IDE**.
+1. No VSCode, abra a aba de extensões e instale a extensão **PlatformIO IDE**.
 
-3. Após a instalação, abra o PlatformIO (`Ctrl + Shift + P`) e selecione:  
+2. Após a instalação, abra o PlatformIO (`Ctrl + Shift + P`) e selecione:  
    - `PlatformIO: New Project`
    - Nome do projeto: `esp32_mqtt`
    - Board: `Wokwi ESP32 Devkit v1`
    - Framework: `Arduino`
 
-4. Crie o projeto e abra a pasta gerada.
+3. Crie o projeto e abra a pasta gerada.
 
 ---
 
