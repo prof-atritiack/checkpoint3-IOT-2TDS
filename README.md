@@ -10,8 +10,15 @@
 ## FORMATO DA ENTREGA:
 A entrega deve conter os seguintes elementos:  
 1. Link do repositório no GitHub contendo todos os arquivos do projeto.  
-2. Link para um vídeo curto (máximo 3 minutos) demonstrando a aplicação funcionando.  
-3. Arquivo `integrantes.txt` contendo os nomes completos dos integrantes.      
+2. Link para um vídeo curto (máximo 3 minutos) demonstrando a aplicação funcionando. O vídeo deve mostrar:  
+   - Os dados sendo enviados e visualizados no **Monitor Serial do VSCode ou Arduino IDE**.  
+   - A visualização dos dados no **NodeRED**.  
+3. Arquivo `integrantes.txt` contendo os nomes completos dos integrantes.  
+
+---
+
+## USO DO LABORATÓRIO:
+As aulas entre os dias **12 e 20 de maio** poderão ser utilizadas para o desenvolvimento da atividade no laboratório, utilizando as placas **ESP32 DEVKIT v1** disponíveis para os grupos. Os alunos que optarem por realizar a atividade remotamente podem utilizar o Wokwi integrado ao PlatformIO.
 
 ---
 
@@ -39,7 +46,6 @@ A atividade pode ser realizada em grupos de até **3 integrantes**. Apenas um al
 Os alunos também podem optar por simular o projeto utilizando o PlatformIO com Wokwi no VSCode. Essa opção é recomendada para aqueles que não possuem o hardware DOIT ESP32 DEVKIT V1.
 
 ### **INSTALAÇÃO DA EXTENSÃO PlatformIO:**
-
 
 1. No VSCode, abra a aba de extensões e instale a extensão **PlatformIO IDE**.
 
