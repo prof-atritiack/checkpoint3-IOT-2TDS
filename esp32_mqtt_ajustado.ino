@@ -82,5 +82,5 @@ void loop() {
   // Enviar dados
   enviarDadosMQTT(temperatura, umidade, pressao, altitude);
 
-  delay(5000); // Intervalo de envio de 5 segundos
+  delay(10000); // Intervalo de envio de 10 segundos
 }
