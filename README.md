@@ -54,7 +54,7 @@ Os alunos também podem optar por simular o projeto utilizando o PlatformIO com 
 2. Após a instalação, abra o PlatformIO (`Ctrl + Shift + P`) e selecione:  
    - `PlatformIO: New Project`
    - Nome do projeto: `esp32_mqtt`
-   - Board: `Wokwi ESP32 Devkit v1`
+   - Board: `DOIT ESP32 DEVKIT V1`
    - Framework: `Arduino`
 
 3. Crie o projeto e abra a pasta gerada.
