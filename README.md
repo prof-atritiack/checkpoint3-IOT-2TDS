@@ -285,6 +285,7 @@ Em caso de problemas de conexão, verifique o arquivo de log do Mosquitto:
 ```bash
 sudo tail -f /var/log/mosquitto/mosquitto.log
 
+---
 
 ## PARTE 2: ENVIO DE DADOS SIMULADOS VIA MQTT NO ESP32
 
