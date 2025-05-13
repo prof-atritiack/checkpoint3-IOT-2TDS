@@ -185,21 +185,106 @@ Acesse o Node-RED no navegador em:
 
 Agora o Node.js está atualizado para a versão v18, compatível com a versão atual do Node-RED.
 
-### INSTALAÇÃO DO MOSQUITTO BROKER:
+# Instalação e Teste do Mosquitto Broker na CLI da Azure
+
+## Pré-requisitos
+- Sistema operacional Linux (Ubuntu ou similar)
+- Acesso à CLI da Azure
+- Permissões de administrador
+
+---
+
+## 1. Instalação do Mosquitto Broker
+
+Execute os comandos abaixo para instalar o Mosquitto Broker e o cliente Mosquitto:
 
 ```bash
+sudo apt update
 sudo apt install -y mosquitto mosquitto-clients
+```
+
+Habilite o serviço para iniciar automaticamente:
+
+```bash
 sudo systemctl enable mosquitto
+```
+
+Inicie o serviço:
+
+```bash
 sudo systemctl start mosquitto
 ```
 
-Teste o Mosquitto Broker com o comando:
+Verifique o status do serviço:
+
+```bash
+sudo systemctl status mosquitto
+```
+
+---
+
+## 2. Configuração do Mosquitto para Acesso Local
+
+Abra o arquivo de configuração do Mosquitto:
+
+```bash
+sudo nano /etc/mosquitto/mosquitto.conf
+```
+
+Adicione as seguintes linhas ao final do arquivo:
+
+```plaintext
+listener 1883
+allow_anonymous true
+```
+
+Salve e saia do editor (`Ctrl + X`, `Y`, `Enter`).
+
+Reinicie o serviço para aplicar as configurações:
+
+```bash
+sudo systemctl restart mosquitto
+```
+
+---
+
+## 3. Teste do Mosquitto Broker
+
+Abra um terminal e execute o seguinte comando para se inscrever no tópico `teste`:
 
 ```bash
 mosquitto_sub -h localhost -t teste -v
 ```
 
+Em outro terminal, publique uma mensagem para testar a conexão:
+
+```bash
+mosquitto_pub -h localhost -t teste -m "Testando conexão no Mosquitto Broker"
+```
+
+Você deverá ver a mensagem recebida no terminal do `mosquitto_sub`.
+
 ---
+
+## 4. Depuração e Solução de Problemas
+
+Se a mensagem não aparecer no terminal do `mosquitto_sub`, execute o comando com a flag `-d` para depurar:
+
+```bash
+mosquitto_sub -h localhost -t teste -v -d
+```
+
+Verifique também o status do serviço:
+
+```bash
+sudo systemctl status mosquitto
+```
+
+Em caso de problemas de conexão, verifique o arquivo de log do Mosquitto:
+
+```bash
+sudo tail -f /var/log/mosquitto/mosquitto.log
+
 
 ## PARTE 2: ENVIO DE DADOS SIMULADOS VIA MQTT NO ESP32
 
