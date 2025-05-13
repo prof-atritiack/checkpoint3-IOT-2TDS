@@ -1,4 +1,3 @@
-
 # CHECKPOINT 03 - PROTOCOLO MQTT COM ESP32
 **Disciplina:** Disruptive Architectures: IOT, IOB & Generative AI  
 **Professor:** André Tritiack  
@@ -19,7 +18,7 @@ A entrega deve conter os seguintes elementos:
 
 ## USO DOS KITS DOIT ESP32 DEVKIT V1 NO LABORATÓRIO:
 
-As aulas entre os dias **12 e 20 de maio** poderão ser utilizadas para o desenvolvimento da atividade do CP3 no laboratório, utilizando as placas **ESP32 DEVKIT v1** disponíveis para os grupos. 
+As aulas entre os dias **12 e 20 de maio** poderão ser utilizadas para o desenvolvimento da atividade do CP3 no laboratório, utilizando as placas **ESP32 DEVKIT v1** disponíveis para os grupos.  
 Os alunos que optarem por realizar a atividade remotamente podem utilizar o Wokwi integrado ao PlatformIO (tutorial está incluído abaixo)
 
 ---
@@ -39,7 +38,7 @@ A atividade pode ser realizada em grupos de até **3 integrantes**. Apenas um al
 - Estrutura do repositório:
   - README.md (Instruções detalhadas do projeto)
   - esp32_mqtt.ino (Código base ajustado com credenciais)
-  - integrantes.txt (Nome dos integrantes e link da máquina virtual)  
+  - integrantes.txt (Nome dos integrantes e link da máquina virtual)
 
 ---
 
@@ -50,13 +49,11 @@ Os alunos também podem optar por simular o projeto utilizando o PlatformIO com 
 ### **INSTALAÇÃO DA EXTENSÃO PlatformIO:**
 
 1. No VSCode, abra a aba de extensões (`Ctrl+Shift+X`) e instale a extensão **PlatformIO IDE**.
-
 2. Após a instalação, abra o PlatformIO (`Ctrl + Shift + P`) e selecione:
    - `PlatformIO: New Project`
    - Nome do projeto: `esp32_mqtt`
    - Board: `DOIT ESP32 DEVKIT V1`
    - Framework: `Arduino`
-
 3. Clique em **Finish** e aguarde a criação da estrutura do projeto.
 
 ---
@@ -87,19 +84,6 @@ upload_port = https://wokwi.com/projects/SEU_PROJECT_ID
    - Crie um novo projeto ESP32.
    - Copie o **Project ID** gerado e substitua `SEU_PROJECT_ID` no `platformio.ini`.
 
-3. Compile o código no PlatformIO (`Ctrl + Alt + B`).
-
-4. Para enviar o código para o Wokwi, utilize o comando:
-
-```bash
-pio run -t upload
-```
-
-5. Para visualizar o Monitor Serial:
-
-```bash
-pio device monitor
-```
 ---
 
 ## PARTE 1: CRIAÇÃO DA MÁQUINA VIRTUAL LINUX NA AZURE
@@ -110,137 +94,44 @@ pio device monitor
    - SSH: 22
    - HTTP: 80
 
-4. Crie uma regra de entrada para a liberação das portas 1880 (NodeRED) e 1883 (Broker).  
-
-# INSTALAÇÃO E ATUALIZAÇÃO DO NODE.JS PARA NODE-RED (v18 ou Superior)
-
-Acesse a máquina virtual via SSH:
-
-```bash
-ssh usuario@ip_da_vm
-```
+4. Crie uma regra de entrada para a liberação das portas 1880 (NodeRED) e 1883 (Broker).
 
 ---
 
-## 1. Remover versões antigas do Node.js
-
-Antes de instalar a nova versão do Node.js, é recomendado remover versões anteriores para evitar conflitos:
-
-```bash
-sudo apt remove -y nodejs npm
-sudo apt autoremove -y
-```
-
----
-
-## 2. Atualizar os pacotes do sistema
+## INSTALAÇÃO DO NODE.JS PARA NODE-RED (v18 ou Superior)
 
 ```bash
 sudo apt update && sudo apt upgrade -y
-```
-
----
-
-## 3. Instalar Node.js v18.x
-
-- Adicione o repositório NodeSource:
-
-```bash
 curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-```
-
-- Instale o Node.js:
-
-```bash
 sudo apt install -y nodejs
-```
-
-- Verifique a versão instalada:
-
-```bash
 node -v
 npm -v
 ```
 
 ---
 
-## 4. Instalar o Node-RED
+## INSTALAÇÃO DO MOSQUITTO BROKER
 
 ```bash
-sudo npm install -g --unsafe-perm node-red
-```
-
----
-
-## 5. Iniciar o Node-RED
-
-```bash
-node-red
-```
-
-Acesse o Node-RED no navegador em:  
-`http://ip_da_vm:1880`
-
----
-
-Agora o Node.js está atualizado para a versão v18, compatível com a versão atual do Node-RED.
-
-# Instalação e Teste do Mosquitto Broker na CLI da Azure
-
-## Pré-requisitos
-- Sistema operacional Linux (Ubuntu ou similar)
-- Acesso à CLI da Azure
-- Permissões de administrador
-
----
-
-## 1. Instalação do Mosquitto Broker
-
-Execute os comandos abaixo para instalar o Mosquitto Broker e o cliente Mosquitto:
-
-```bash
-sudo apt update
 sudo apt install -y mosquitto mosquitto-clients
-```
-
-Habilite o serviço para iniciar automaticamente:
-
-```bash
 sudo systemctl enable mosquitto
-```
-
-Inicie o serviço:
-
-```bash
 sudo systemctl start mosquitto
 ```
 
-Verifique o status do serviço:
-
-```bash
-sudo systemctl status mosquitto
-```
-
----
-
-## 2. Configuração do Mosquitto para Acesso Local
-
-Abra o arquivo de configuração do Mosquitto:
+Abra o arquivo de configuração:
 
 ```bash
 sudo nano /etc/mosquitto/mosquitto.conf
 ```
 
-Adicione as seguintes linhas ao final do arquivo:
+Adicione:
 
 ```plaintext
 listener 1883
 allow_anonymous true
 ```
 
-Salve e saia do editor (`Ctrl + X`, `Y`, `Enter`).
-
-Reinicie o serviço para aplicar as configurações:
+Reinicie o serviço:
 
 ```bash
 sudo systemctl restart mosquitto
@@ -248,64 +139,25 @@ sudo systemctl restart mosquitto
 
 ---
 
-## 3. Teste do Mosquitto Broker
+## TESTE DO MOSQUITTO BROKER
 
-Abra um terminal e execute o seguinte comando para se inscrever no tópico `teste`:
+Subscrição:
 
 ```bash
 mosquitto_sub -h localhost -t teste -v
 ```
 
-Em outro terminal, publique uma mensagem para testar a conexão:
+Publicação:
 
 ```bash
 mosquitto_pub -h localhost -t teste -m "Testando conexão no Mosquitto Broker"
 ```
 
-Você deverá ver a mensagem recebida no terminal do `mosquitto_sub`.
-
 ---
 
-## 4. Depuração e Solução de Problemas
-
-Se a mensagem não aparecer no terminal do `mosquitto_sub`, execute o comando com a flag `-d` para depurar:
-
-```bash
-mosquitto_sub -h localhost -t teste -v -d
-```
-
-Verifique também o status do serviço:
-
-```bash
-sudo systemctl status mosquitto
-```
-
-Em caso de problemas de conexão, verifique o arquivo de log do Mosquitto:
-
-```bash
-sudo tail -f /var/log/mosquitto/mosquitto.log
-
----
-
-## PARTE 2: ENVIO DE DADOS SIMULADOS VIA MQTT NO ESP32
-
-- Utilizando o código base `esp32_mqtt.ino`, ajuste as credenciais e defina os tópicos MQTT.
-- Os dados enviados devem incluir:
-  - Temperatura: 20°C a 35°C
-  - Umidade: 40% a 80%
-  - Pressão: 980 hPa a 1050 hPa
-  - Altitude: 0 m a 500 m
-
-### INSTRUÇÕES PARA AJUSTE DO CÓDIGO:
-- Informe as credenciais no código nas seções marcadas como **INSIRA AQUI**.
-- Verifique o IP da máquina virtual e ajuste o broker MQTT no código.
-
----
-
-## REFERÊNCIAS IMPORTANTES:
+## REFERÊNCIAS:
 - [Documentação do ESP32](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/)
 - [Documentação do NodeRED](https://nodered.org/docs/)
-- [Documentação do Mosquitto MQTT](https://mosquitto.org/documentation/)
-- [Protocolo MQTT - Guia Completo](https://mqtt.org/getting-started/)
+- [Mosquitto MQTT](https://mosquitto.org/documentation/)
 - [PlatformIO IDE](https://platformio.org/)
 - [Wokwi ESP32 Simulator](https://wokwi.com/)
