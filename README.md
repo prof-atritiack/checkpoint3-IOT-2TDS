@@ -97,25 +97,81 @@ upload_port = https://wokwi.com/projects/SEU_PROJECT_ID
 3. Configure as portas de acesso:
    - SSH: 22
    - HTTP: 80
-   - MQTT: 1883
 
-### INSTALAÇÃO DO NODE-RED:
+4. Crie uma regra de entrada para a liberação das portas 1880 (NodeRED) e 1883 (Broker).  
+
+# INSTALAÇÃO E ATUALIZAÇÃO DO NODE.JS PARA NODE-RED (v18 ou Superior)
+
 Acesse a máquina virtual via SSH:
 
 ```bash
 ssh usuario@ip_da_vm
 ```
 
-Atualize os pacotes e instale o Node-RED:
+---
+
+## 1. Remover versões antigas do Node.js
+
+Antes de instalar a nova versão do Node.js, é recomendado remover versões anteriores para evitar conflitos:
 
 ```bash
-sudo apt update
-sudo apt install -y nodejs npm
+sudo apt remove -y nodejs npm
+sudo apt autoremove -y
+```
+
+---
+
+## 2. Atualizar os pacotes do sistema
+
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+---
+
+## 3. Instalar Node.js v18.x
+
+- Adicione o repositório NodeSource:
+
+```bash
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+```
+
+- Instale o Node.js:
+
+```bash
+sudo apt install -y nodejs
+```
+
+- Verifique a versão instalada:
+
+```bash
+node -v
+npm -v
+```
+
+---
+
+## 4. Instalar o Node-RED
+
+```bash
 sudo npm install -g --unsafe-perm node-red
+```
+
+---
+
+## 5. Iniciar o Node-RED
+
+```bash
 node-red
 ```
 
-Acesse o Node-RED no navegador: `http://ip_da_vm:1880`  
+Acesse o Node-RED no navegador em:  
+`http://ip_da_vm:1880`
+
+---
+
+Agora o Node.js está atualizado para a versão v18, compatível com a versão atual do Node-RED.
 
 ### INSTALAÇÃO DO MOSQUITTO BROKER:
 
