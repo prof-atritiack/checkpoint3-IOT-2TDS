@@ -236,7 +236,7 @@ sudo tail -f /var/log/mosquitto/mosquitto.log
 
 ## PARTE 2: ENVIO DE DADOS SIMULADOS VIA MQTT NO ESP32
 
-- Utilizando o código base `esp32_mqtt.ino`, ajuste as credenciais e defina os tópicos MQTT.
+- Utilizando o código base `esp32_mqtt_ajustado.ino`, ajuste as credenciais e defina os tópicos MQTT.
 - Os dados enviados devem incluir:
   - Temperatura: 20°C a 35°C
   - Umidade: 40% a 80%
