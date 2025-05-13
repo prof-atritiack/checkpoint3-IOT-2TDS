@@ -49,22 +49,23 @@ Os alunos também podem optar por simular o projeto utilizando o PlatformIO com 
 
 ### **INSTALAÇÃO DA EXTENSÃO PlatformIO:**
 
-1. No VSCode, abra a aba de extensões e instale a extensão **PlatformIO IDE**.
+1. No VSCode, abra a aba de extensões (`Ctrl+Shift+X`) e instale a extensão **PlatformIO IDE**.
 
-2. Após a instalação, abra o PlatformIO (`Ctrl + Shift + P`) e selecione:  
+2. Após a instalação, abra o PlatformIO (`Ctrl + Shift + P`) e selecione:
    - `PlatformIO: New Project`
    - Nome do projeto: `esp32_mqtt`
    - Board: `DOIT ESP32 DEVKIT V1`
    - Framework: `Arduino`
 
-3. Crie o projeto e abra a pasta gerada.
+3. Clique em **Finish** e aguarde a criação da estrutura do projeto.
 
 ---
 
-### **INTEGRAÇÃO COM WOKWI:**
-1. No projeto criado, abra o arquivo `platformio.ini` e adicione as seguintes configurações:
+### **CONFIGURAÇÃO DO WOKWI NO PlatformIO:**
 
-```
+1. No projeto criado, abra o arquivo `platformio.ini` e substitua o conteúdo por:
+
+```ini
 [env:wokwi]
 platform = espressif32
 board = esp32dev
@@ -83,11 +84,22 @@ upload_port = https://wokwi.com/projects/SEU_PROJECT_ID
 ```
 
 2. Acesse o site do Wokwi: [https://wokwi.com](https://wokwi.com)  
-   - Crie um novo projeto ESP32.  
-   - Copie o Project ID gerado e insira no `platformio.ini` no campo `upload_port`.  
+   - Crie um novo projeto ESP32.
+   - Copie o **Project ID** gerado e substitua `SEU_PROJECT_ID` no `platformio.ini`.
 
-3. Compile e faça o upload do código diretamente para o Wokwi.
+3. Compile o código no PlatformIO (`Ctrl + Alt + B`).
 
+4. Para enviar o código para o Wokwi, utilize o comando:
+
+```bash
+pio run -t upload
+```
+
+5. Para visualizar o Monitor Serial:
+
+```bash
+pio device monitor
+```
 ---
 
 ## PARTE 1: CRIAÇÃO DA MÁQUINA VIRTUAL LINUX NA AZURE
