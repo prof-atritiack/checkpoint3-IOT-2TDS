@@ -18,7 +18,7 @@ A entrega deve conter os seguintes elementos:
 
 ## USO DOS KITS DOIT ESP32 DEVKIT V1 NO LABORATÓRIO:
 
-As aulas entre os dias **12 e 22 de maio** poderão ser utilizadas para o desenvolvimento da atividade do CP3 no laboratório, utilizando as placas **ESP32 DEVKIT v1** disponíveis para os grupos.  
+As aulas entre os dias **12 e 20 de maio** poderão ser utilizadas para o desenvolvimento da atividade do CP3 no laboratório, utilizando as placas **ESP32 DEVKIT v1** disponíveis para os grupos.  
 Os alunos que optarem por realizar a atividade remotamente podem utilizar o Wokwi integrado ao PlatformIO (tutorial está incluído abaixo)
 
 ---
@@ -60,7 +60,17 @@ Os alunos também podem optar por simular o projeto utilizando o PlatformIO com 
 
 ### **CONFIGURAÇÃO DO WOKWI NO PlatformIO:**
 
-1. No projeto criado, abra o arquivo `platformio.ini` e substitua o conteúdo por:
+1. **Crie uma conta ou faça login no Wokwi:**
+   - Acesse [https://wokwi.com](https://wokwi.com) e faça o login.
+
+2. **Crie um Novo Projeto ESP32 no Wokwi:**
+   - Após o login, clique em **New Project**.
+   - Selecione o modelo **ESP32 DevKit v1**.
+   - Copie o **Project ID** gerado (exemplo: `https://wokwi.com/projects/123456789`). Esse ID será utilizado no `platformio.ini`.
+
+3. **No VSCode, abra o projeto no PlatformIO:**
+   - Localize o arquivo `platformio.ini` na raiz do projeto.
+   - Substitua o conteúdo por:
 
 ```ini
 [env:wokwi]
@@ -80,80 +90,43 @@ upload_flags =
 upload_port = https://wokwi.com/projects/SEU_PROJECT_ID
 ```
 
-2. Acesse o site do Wokwi: [https://wokwi.com](https://wokwi.com)  
-   - Crie um novo projeto ESP32.
-   - Copie o **Project ID** gerado e substitua `SEU_PROJECT_ID` no `platformio.ini`.
+- Substitua `SEU_PROJECT_ID` pelo ID copiado do Wokwi.
 
 ---
 
-## PARTE 1: CRIAÇÃO DA MÁQUINA VIRTUAL LINUX NA AZURE
+### **COMPILAÇÃO E ENVIO DO PROJETO:**
 
-1. Acesse o portal Azure: [https://portal.azure.com](https://portal.azure.com)  
-2. Crie um recurso do tipo **Máquina Virtual** utilizando a imagem **Ubuntu Server 20.04 LTS**.
-3. Configure as portas de acesso:
-   - SSH: 22
-   - HTTP: 80
-
-4. Crie uma regra de entrada para a liberação das portas 1880 (NodeRED) e 1883 (Broker).
-
----
-
-## INSTALAÇÃO DO NODE.JS PARA NODE-RED (v18 ou Superior)
+1. **Compilar o projeto no PlatformIO:**
+   - No VSCode, abra o terminal e execute o comando:
 
 ```bash
-sudo apt update && sudo apt upgrade -y
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt install -y nodejs
-node -v
-npm -v
+pio run
 ```
 
----
+- O firmware será gerado na pasta:
 
-## INSTALAÇÃO DO MOSQUITTO BROKER
+```
+.pio/build/wokwi/firmware.bin
+```
+
+2. **Enviar o Firmware para o Wokwi:**
+   - No terminal, execute o comando:
 
 ```bash
-sudo apt install -y mosquitto mosquitto-clients
-sudo systemctl enable mosquitto
-sudo systemctl start mosquitto
+pio run -t upload
 ```
 
-Abra o arquivo de configuração:
+- A conexão será estabelecida automaticamente através do link `upload_port` configurado no `platformio.ini`.
+
+3. **Monitorar a Execução no Wokwi:**
+   - No Wokwi, clique em **Start Simulation** para iniciar a simulação.
+   - No VSCode, utilize o Monitor Serial para visualizar a execução do código:
 
 ```bash
-sudo nano /etc/mosquitto/mosquitto.conf
+pio device monitor
 ```
 
-Adicione:
-
-```plaintext
-listener 1883
-allow_anonymous true
-```
-
-Reinicie o serviço:
-
-```bash
-sudo systemctl restart mosquitto
-```
-
----
-
-## TESTE DO MOSQUITTO BROKER
-
-Subscrição:
-
-```bash
-mosquitto_sub -h localhost -t teste -v
-```
-
-Publicação:
-
-```bash
-mosquitto_pub -h localhost -t teste -m "Testando conexão no Mosquitto Broker"
-```
-
----
+- Certifique-se de que a simulação esteja em execução no Wokwi para visualizar os dados no monitor.
 
 ## REFERÊNCIAS:
 - [Documentação do ESP32](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/)
