@@ -131,6 +131,9 @@ git clone https://github.com/arnaldojr/iot-esp32-wokwi-vscode.git
 cd iot-esp32-wokwi-vscode
 code .
 ```
+Link para vídeo de demonstração:
+https://fiapcom-my.sharepoint.com/:v:/g/personal/pf1745_fiap_com_br/ESugYBDBbMxBv3su8quXIDIBVV7Em3ydKeWfZZPNP2HcSQ
+
 
 ---
 
