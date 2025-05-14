@@ -63,7 +63,6 @@ Siga as instruções do repositório do Professor Arnaldo Viana: https://github.
 
 Acesse a máquina virtual via SSH:
 
-bash
 ssh usuario@ip_da_vm
 
 
@@ -73,7 +72,6 @@ ssh usuario@ip_da_vm
 
 Antes de instalar a nova versão do Node.js, é recomendado remover versões anteriores para evitar conflitos:
 
-bash
 sudo apt remove -y nodejs npm
 sudo apt autoremove -y
 
@@ -82,7 +80,7 @@ sudo apt autoremove -y
 
 ## 2. Atualizar os pacotes do sistema
 
-bash
+
 sudo apt update && sudo apt upgrade -y
 
 
@@ -92,19 +90,16 @@ sudo apt update && sudo apt upgrade -y
 
 - Adicione o repositório NodeSource:
 
-bash
 curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 
 
 - Instale o Node.js:
 
-bash
 sudo apt install -y nodejs
 
 
 - Verifique a versão instalada:
 
-bash
 node -v
 npm -v
 
@@ -113,7 +108,6 @@ npm -v
 
 ## 4. Instalar o Node-RED
 
-bash
 sudo npm install -g --unsafe-perm node-red
 
 
@@ -121,7 +115,6 @@ sudo npm install -g --unsafe-perm node-red
 
 ## 5. Iniciar o Node-RED
 
-bash
 node-red
 
 
@@ -145,26 +138,26 @@ Agora o Node.js está atualizado para a versão v18, compatível com a versão a
 
 Execute os comandos abaixo para instalar o Mosquitto Broker e o cliente Mosquitto:
 
-bash
+
 sudo apt update
 sudo apt install -y mosquitto mosquitto-clients
 
 
 Habilite o serviço para iniciar automaticamente:
 
-bash
+
 sudo systemctl enable mosquitto
 
 
 Inicie o serviço:
 
-bash
+
 sudo systemctl start mosquitto
 
 
 Verifique o status do serviço:
 
-bash
+
 sudo systemctl status mosquitto
 
 
@@ -174,13 +167,12 @@ sudo systemctl status mosquitto
 
 Abra o arquivo de configuração do Mosquitto:
 
-bash
+
 sudo nano /etc/mosquitto/mosquitto.conf
 
 
 Adicione as seguintes linhas ao final do arquivo:
 
-plaintext
 listener 1883
 allow_anonymous true
 
@@ -189,7 +181,6 @@ Salve e saia do editor (Ctrl + X, Y, Enter).
 
 Reinicie o serviço para aplicar as configurações:
 
-bash
 sudo systemctl restart mosquitto
 
 
@@ -199,13 +190,12 @@ sudo systemctl restart mosquitto
 
 Abra um terminal e execute o seguinte comando para se inscrever no tópico teste:
 
-bash
 mosquitto_sub -h localhost -t teste -v
 
 
 Em outro terminal, publique uma mensagem para testar a conexão:
 
-bash
+
 mosquitto_pub -h localhost -t teste -m "Testando conexão no Mosquitto Broker"
 
 
@@ -217,19 +207,19 @@ Você deverá ver a mensagem recebida no terminal do mosquitto_sub.
 
 Se a mensagem não aparecer no terminal do mosquitto_sub, execute o comando com a flag -d para depurar:
 
-bash
+
 mosquitto_sub -h localhost -t teste -v -d
 
 
 Verifique também o status do serviço:
 
-bash
+
 sudo systemctl status mosquitto
 
 
 Em caso de problemas de conexão, verifique o arquivo de log do Mosquitto:
 
-bash
+
 sudo tail -f /var/log/mosquitto/mosquitto.log
 
 ---
