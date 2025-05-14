@@ -49,180 +49,136 @@ Os alunos também podem optar por simular o projeto utilizando o PlatformIO com 
 Siga as instruções do repositório do Professor Arnaldo Viana: https://github.com/arnaldojr/iot-esp32-wokwi-vscode
 
 
-  ## PARTE 1: CRIAÇÃO DA MÁQUINA VIRTUAL LINUX NA AZURE
+## CRIAÇÃO DA MÁQUINA VIRTUAL LINUX NA AZURE:
 
-1. Acesse o portal Azure: [https://portal.azure.com](https://portal.azure.com)  
+1. Acesse o portal Azure: [https://portal.azure.com](https://portal.azure.com).
+
 2. Crie um recurso do tipo **Máquina Virtual** utilizando a imagem **Ubuntu Server 20.04 LTS**.
+
 3. Configure as portas de acesso:
    - SSH: 22
    - HTTP: 80
+   - MQTT: 1883
+   - NodeRED: 1880
 
-4. Crie uma regra de entrada para a liberação das portas 1880 (NodeRED) e 1883 (Broker).  
+4. Acesse a máquina virtual via SSH:
 
-# INSTALAÇÃO E ATUALIZAÇÃO DO NODE.JS PARA NODE-RED (v18 ou Superior)
+```bash
+ssh usuario@SEU_IP_VM_AZURE
+```
 
-Acesse a máquina virtual via SSH:
+5. Atualize os pacotes:
 
-ssh usuario@ip_da_vm
-
+```bash
+sudo apt update && sudo apt upgrade -y
+```
 
 ---
 
-## 1. Remover versões antigas do Node.js
+## INSTALAÇÃO DO NODE.JS E NODE-RED:
 
-Antes de instalar a nova versão do Node.js, é recomendado remover versões anteriores para evitar conflitos:
+1. Remova versões antigas:
 
+```bash
 sudo apt remove -y nodejs npm
 sudo apt autoremove -y
+```
 
+2. Instale Node.js v18.x:
 
----
-
-## 2. Atualizar os pacotes do sistema
-
-
-sudo apt update && sudo apt upgrade -y
-
-
----
-
-## 3. Instalar Node.js v18.x
-
-- Adicione o repositório NodeSource:
-
+```bash
 curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-
-
-- Instale o Node.js:
-
 sudo apt install -y nodejs
+```
 
+3. Instale o Node-RED:
 
-- Verifique a versão instalada:
-
-node -v
-npm -v
-
-
----
-
-## 4. Instalar o Node-RED
-
+```bash
 sudo npm install -g --unsafe-perm node-red
+```
 
+4. Inicie o Node-RED:
 
----
-
-## 5. Iniciar o Node-RED
-
+```bash
 node-red
+```
 
-
-Acesse o Node-RED no navegador em:  
-http://ip_da_vm:1880
-
----
-
-Agora o Node.js está atualizado para a versão v18, compatível com a versão atual do Node-RED.
-
-# Instalação e Teste do Mosquitto Broker na CLI da Azure
-
-## Pré-requisitos
-- Sistema operacional Linux (Ubuntu ou similar)
-- Acesso à CLI da Azure
-- Permissões de administrador
+Acesse o Node-RED em: `http://SEU_IP_VM_AZURE:1880`
 
 ---
 
-## 1. Instalação do Mosquitto Broker
+## INSTALAÇÃO DO MOSQUITTO BROKER:
 
-Execute os comandos abaixo para instalar o Mosquitto Broker e o cliente Mosquitto:
+1. **Instale o Mosquitto Broker e os clientes MQTT:**
 
-
-sudo apt update
+```bash
 sudo apt install -y mosquitto mosquitto-clients
-
-
-Habilite o serviço para iniciar automaticamente:
-
-
-sudo systemctl enable mosquitto
-
-
-Inicie o serviço:
-
-
-sudo systemctl start mosquitto
-
-
-Verifique o status do serviço:
-
-
-sudo systemctl status mosquitto
-
+```
 
 ---
 
-## 2. Configuração do Mosquitto para Acesso Local
+2. **Criação de um Usuário MQTT:**
 
-Abra o arquivo de configuração do Mosquitto:
+Para configurar autenticação no Mosquitto, precisamos criar um usuário com senha.
 
+- Execute o comando abaixo para criar um usuário chamado `admin` e definir a senha:
 
+```bash
+sudo mosquitto_passwd -c /etc/mosquitto/passwd admin
+```
+
+- O terminal pedirá para definir a senha. Exemplo:
+
+```
+Enter new password:
+Reenter password:
+```
+
+Esse arquivo `passwd` armazena o usuário e a senha criptografados e será referenciado no arquivo de configuração do Mosquitto.
+
+---
+
+3. **Configuração do Mosquitto Broker:**
+
+Para aplicar a autenticação e configurar o listener MQTT, edite o arquivo `mosquitto.conf`:
+
+```bash
 sudo nano /etc/mosquitto/mosquitto.conf
+```
 
+Adicione as seguintes linhas no final do arquivo:
 
-Adicione as seguintes linhas ao final do arquivo:
-
+```plaintext
+# Define a porta MQTT
 listener 1883
-allow_anonymous true
 
+# Desativa o acesso anônimo
+allow_anonymous false
 
-Salve e saia do editor (Ctrl + X, Y, Enter).
+# Define o caminho do arquivo de senhas
+password_file /etc/mosquitto/passwd
+```
 
-Reinicie o serviço para aplicar as configurações:
+Salve (`CTRL + X`, `Y`, `Enter`).
 
+---
+
+4. **Reiniciar o Mosquitto Broker:**
+
+Após a configuração, é necessário reiniciar o serviço para que as alterações sejam aplicadas:
+
+```bash
 sudo systemctl restart mosquitto
+```
 
+Verifique o status para garantir que o broker esteja ativo e sem erros:
 
----
-
-## 3. Teste do Mosquitto Broker
-
-Abra um terminal e execute o seguinte comando para se inscrever no tópico teste:
-
-mosquitto_sub -h localhost -t teste -v
-
-
-Em outro terminal, publique uma mensagem para testar a conexão:
-
-
-mosquitto_pub -h localhost -t teste -m "Testando conexão no Mosquitto Broker"
-
-
-Você deverá ver a mensagem recebida no terminal do mosquitto_sub.
-
----
-
-## 4. Depuração e Solução de Problemas
-
-Se a mensagem não aparecer no terminal do mosquitto_sub, execute o comando com a flag -d para depurar:
-
-
-mosquitto_sub -h localhost -t teste -v -d
-
-
-Verifique também o status do serviço:
-
-
+```bash
 sudo systemctl status mosquitto
-
-
-Em caso de problemas de conexão, verifique o arquivo de log do Mosquitto:
-
-
-sudo tail -f /var/log/mosquitto/mosquitto.log
+```
 
 ---
+
 
 ## PARTE 2: ENVIO DE DADOS SIMULADOS VIA MQTT NO ESP32
 
