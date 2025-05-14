@@ -91,6 +91,9 @@ sudo apt install -y mosquitto mosquitto-clients
 
 Crie um usuário MQTT:
 
+Substitua "admin" pelo seu nome de usuário que quer criar.
+Substitua "mosquitto_passwd" pela senha que quer criar.
+
 ```bash
 sudo mosquitto_passwd -c /etc/mosquitto/passwd admin
 ```
