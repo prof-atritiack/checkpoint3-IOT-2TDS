@@ -128,8 +128,6 @@ Clone o repositório base para o Wokwi:
 
 ```bash
 git clone https://github.com/arnaldojr/iot-esp32-wokwi-vscode.git
-cd iot-esp32-wokwi-vscode
-code .
 ```
 Link para vídeo de demonstração:
 https://fiapcom-my.sharepoint.com/:v:/g/personal/pf1745_fiap_com_br/ESugYBDBbMxBv3su8quXIDIBVV7Em3ydKeWfZZPNP2HcSQ
@@ -139,43 +137,50 @@ https://fiapcom-my.sharepoint.com/:v:/g/personal/pf1745_fiap_com_br/ESugYBDBbMxB
 
 ### 2. Configuração do Código ESP32 no PlatformIO
 
-No arquivo `src/main.cpp`, insira as credenciais de Wi-Fi e as informações do broker MQTT configurado na Azure:
+1. Crie uma pasta para uma nova questão (Q4)
+2. No arquivo "wokwi.toml" altere os campos para Q4.
+3. No arquivo "platform.ini" crie uma nova questão (Q4) e apague as referências das dependências.
+4. No arquivo "src/main.cpp", no trecho descrito abaixo, insira as credenciais de Wi-Fi e as informações do broker MQTT configurado na Azure:
 
 ```cpp
-const char *SSID = "Wokwi-GUEST";
-const char *PASSWORD = "";
 
-const char *BROKER_MQTT = "SEU_IP_VM_AZURE";
-const int BROKER_PORT = 1883;
-const char *ID_MQTT = "esp32_mqtt";
-const char *USER_MQTT = "admin";
-const char *PASS_MQTT = "1234";
-const char *TOPIC_SUBSCRIBE = "fiap/iot/led";
-const char *TOPIC_PUBLISH = "fiap/iot/temphumi";
+// Identificadores
+const char* ID        = "INSIRA O ID DO SEU GRUPO";
+const char* moduleID  = "INSIRA O ID DO SEU ESP32";
+
+// Wi-Fi
+const char* SSID      = "Wokwi-GUEST";
+const char* PASSWORD  = "";
+
+// MQTT Broker
+const char* BROKER_MQTT  = "INSIRA O ENDEREÇO DO SEU BROKER";
+const int   BROKER_PORT  = 1883;
+const char* mqttUser     = "";
+const char* mqttPassword = "";
+
+// Tópico MQTT
+#define TOPICO_PUBLISH  "INSIRA O NOME DO SEU TÓPICO"
+
 ```
 
 ---
 
 ### 3. Envio dos Dados Simulados
 
-No código, simule os seguintes dados:
+No código de exemplo, simule os seguintes dados:
 - Temperatura: 20°C a 35°C
 - Umidade: 40% a 80%
 - Pressão: 980 hPa a 1050 hPa
 - Altitude: 0 m a 500 m
 
-Compile o projeto:
-
-```bash
-pio run
-```
+Compile o projeto e teste o envio dos dados.
 
 ---
 
 ### 4. Testes no Node-RED
 
-- Acesse o Node-RED na Azure: `http://SEU_IP_VM_AZURE:1880`
-- Crie fluxos para subscrever e publicar dados nos tópicos definidos.
+- Acesse o Node-RED na Azure: "http://SEU_IP_VM_AZURE:1880"
+- Crie fluxos para receber os dados no tópico definido.
 - Verifique a comunicação MQTT através do console do Node-RED e do monitor serial no Wokwi.
 
 ---
