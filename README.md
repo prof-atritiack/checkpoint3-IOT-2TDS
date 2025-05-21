@@ -119,6 +119,12 @@ Reinicie o Mosquitto:
 sudo systemctl restart mosquitto
 ```
 
+Teste se o NodeRED e o Mosquitto Broker estão ativos:
+
+```bash
+sudo systemctl is-enabled mosquitto nodered
+```
+
 ---
 
 ## PARTE 2: ENVIO DE DADOS VIA MQTT NO ESP32
